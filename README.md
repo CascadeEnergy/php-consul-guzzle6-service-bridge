@@ -1,2 +1,2 @@
-# php-consul-guzzle6-service-bridge
-ServiceDiscoveryClientInterface implementation on Guzzle6
+# php-service-client-guzzle6
+ServiceClientInterface implementation on Guzzle6
