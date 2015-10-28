@@ -1,5 +1,5 @@
 {
-    "name": "cascade-energy/php-consul-guzzle6-service-bridge",
+    "name": "cascade-energy/php-service-client-guzzle6",
     "description": "Guzzle6 implementation of the ServiceDiscoveryClientInterface in cascade-energy/php-consul-dns-client",
     "repositories": [
         {
