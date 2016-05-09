@@ -19,15 +19,8 @@
             "CascadeEnergy\\Tests\\ServiceDiscovery\\Client\\Guzzle6\\": "src"
         }
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:CascadeEnergy/php-consul-client.git"
-        }
-    ],
     "require": {
         "guzzlehttp/guzzle": "^6.1",
-        "cascade-energy/php-consul-client": "^1.0.0",
         "cascade-energy/php-service-client": "^1.0.0"
     },
     "require-dev": {
