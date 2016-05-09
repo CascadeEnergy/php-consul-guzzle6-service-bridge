@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "81a1a3dc5b9dcb083728d8bef904b92f",
-    "content-hash": "2a4c50a1fb5f06c6513f6541bf07f917",
+    "hash": "f18d266d572c1a484292c575b1aec700",
+    "content-hash": "7d334779e08783db8d121b9a2428184c",
     "packages": [
         {
             "name": "cascade-energy/php-service-client",
@@ -39,6 +39,39 @@
             ],
             "description": "Base interfaces for a service client in PHP",
             "time": "2016-05-09 17:08:33"
+        },
+        {
+            "name": "cascade-energy/php-service-discovery-client",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/CascadeEnergy/php-service-discovery-client.git",
+                "reference": "056bbc16109caa16dbe1cfdc1a962b97ec53eb1a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/CascadeEnergy/php-service-discovery-client/zipball/056bbc16109caa16dbe1cfdc1a962b97ec53eb1a",
+                "reference": "056bbc16109caa16dbe1cfdc1a962b97ec53eb1a",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "CascadeEnergy\\ServiceDiscovery\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Charles Berube",
+                    "email": "charles.berube@cascadeenergy.com"
+                }
+            ],
+            "description": "Base interfaces for PHP service discovery libraries",
+            "time": "2016-05-09 18:43:05"
         },
         {
             "name": "guzzlehttp/guzzle",
