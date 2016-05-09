@@ -14,20 +14,21 @@
             "CascadeEnergy\\ServiceDiscovery\\Client\\Guzzle6\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "CascadeEnergy\\Tests\\ServiceDiscovery\\Client\\Guzzle6\\": "src"
+        }
+    },
     "repositories": [
         {
             "type": "vcs",
-            "url": "git@github.com:cberube/php-consul-dns-client.git"
-        },
-        {
-            "type": "vcs",
-            "url": "git@github.com:cberube/php-service-client.git"
+            "url": "git@github.com:CascadeEnergy/php-consul-client.git"
         }
     ],
     "require": {
         "guzzlehttp/guzzle": "^6.1",
-        "cascade-energy/php-consul-dns-client": "=0.2.x-dev",
-        "cascade-energy/php-service-client": "=0.1.x-dev"
+        "cascade-energy/php-consul-client": "^1.0.0",
+        "cascade-energy/php-service-client": "^1.0.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.0"

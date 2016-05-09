@@ -53,6 +53,6 @@ class ServiceClient implements ServiceClientInterface
 
         $result = $this->guzzleClient->get($uri);
 
-        return json_decode($result->getBody()->getContents());
+        return json_decode(strval($result->getBody()));
     }
 }
