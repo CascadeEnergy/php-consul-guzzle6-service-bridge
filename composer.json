@@ -1,6 +1,6 @@
 {
     "name": "cascade-energy/php-service-client-guzzle6",
-    "description": "Guzzle6 implementation of the ServiceDiscoveryClientInterface in cascade-energy/php-consul-dns-client",
+    "description": "Guzzle6 implementation of the ServiceDiscoveryClientInterface in cascade-energy/php-service-client",
     "minimum-stability": "stable",
     "license": "MIT",
     "authors": [
