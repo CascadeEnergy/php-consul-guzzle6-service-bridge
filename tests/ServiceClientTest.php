@@ -18,8 +18,12 @@ class ServiceClientTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->httpClient = $this->getMock('GuzzleHttp\Client', ['get', 'delete', 'put', 'post']);
-        $this->discoveryClient = $this->getMock('CascadeEnergy\ServiceDiscovery\ServiceDiscoveryClientInterface');
+        $this->httpClient = $this
+            ->getMockBuilder('GuzzleHttp\Client')
+            ->setMethods(['get','delete','put','post'])
+            ->getMock();
+
+        $this->discoveryClient = $this->createMock('CascadeEnergy\ServiceDiscovery\ServiceDiscoveryClientInterface');
 
         /** @noinspection PhpParamsInspection */
         $this->serviceClient = new ServiceClient(
@@ -34,7 +38,7 @@ class ServiceClientTest extends PHPUnit_Framework_TestCase
     {
         $data = json_encode(['foo' => 42]);
 
-        $result = $this->getMock('Psr\Http\Message\ResponseInterface');
+        $result = $this->createMock('Psr\Http\Message\ResponseInterface');
         $result->expects($this->once())->method('getBody')->willReturn($data);
 
         $this->discoveryClient
@@ -56,7 +60,7 @@ class ServiceClientTest extends PHPUnit_Framework_TestCase
     {
         $data = json_encode(['foo' => 42]);
 
-        $result = $this->getMock('Psr\Http\Message\ResponseInterface');
+        $result = $this->createMock('Psr\Http\Message\ResponseInterface');
         $result->expects($this->once())->method('getBody')->willReturn($data);
 
         $this->discoveryClient
@@ -78,7 +82,7 @@ class ServiceClientTest extends PHPUnit_Framework_TestCase
     {
         $data = json_encode(['foo' => 42]);
 
-        $result = $this->getMock('Psr\Http\Message\ResponseInterface');
+        $result = $this->createMock('Psr\Http\Message\ResponseInterface');
         $result->expects($this->once())->method('getBody')->willReturn($data);
 
         $this->discoveryClient
@@ -100,7 +104,7 @@ class ServiceClientTest extends PHPUnit_Framework_TestCase
     public function testItShouldExecuteADeleteRequest()
     {
         $data = json_encode(['foo' => 42]);
-        $result = $this->getMock('Psr\Http\Message\ResponseInterface');
+        $result = $this->createMock('Psr\Http\Message\ResponseInterface');
         $result->expects($this->once())->method('getBody')->willReturn($data);
 
         $this->discoveryClient
@@ -121,7 +125,7 @@ class ServiceClientTest extends PHPUnit_Framework_TestCase
     public function testItShouldExecuteAPutRequest()
     {
         $data = json_encode(['foo' => 42]);
-        $result = $this->getMock('Psr\Http\Message\ResponseInterface');
+        $result = $this->createMock('Psr\Http\Message\ResponseInterface');
         $result->expects($this->once())->method('getBody')->willReturn($data);
 
         $this->discoveryClient
@@ -141,7 +145,7 @@ class ServiceClientTest extends PHPUnit_Framework_TestCase
     public function testItShouldExecuteAPostRequest()
     {
         $data = json_encode(['foo' => 42]);
-        $result = $this->getMock('Psr\Http\Message\ResponseInterface');
+        $result = $this->createMock('Psr\Http\Message\ResponseInterface');
         $result->expects($this->once())->method('getBody')->willReturn($data);
 
         $this->discoveryClient
