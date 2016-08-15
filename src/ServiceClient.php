@@ -44,38 +44,22 @@ class ServiceClient implements ServiceClientInterface
 
     public function get($path, $query = null)
     {
-        $uri = $this->createUri($path, $query);
-
-        $result = $this->guzzleClient->get($uri);
-
-        return json_decode(strval($result->getBody()));
+        return $this->makeRequest('GET', $path, $query);
     }
 
     public function delete($path, $query = null)
     {
-        $uri = $this->createUri($path, $query);
-
-        $result = $this->guzzleClient->delete($uri);
-
-        return json_decode(strval($result->getBody()));
+        return $this->makeRequest('DELETE', $path, $query);
     }
 
     public function put($path, $query = null, $payload = null)
     {
-        $uri = $this->createUri($path, $query);
-
-        $result = $this->guzzleClient->put($uri, $payload);
-
-        return json_decode(strval($result->getBody()));
+        return $this->makeRequest('PUT', $path, $query, $payload);
     }
     
     public function post($path, $query = null, $payload = null)
     {
-        $uri = $this->createUri($path, $query);
-
-        $result = $this->guzzleClient->post($uri, $payload);
-
-        return json_decode(strval($result->getBody()));
+        return $this->makeRequest('POST', $path, $query, $payload);
     }
 
     private function createUri($path, $query)
@@ -88,5 +72,18 @@ class ServiceClient implements ServiceClientInterface
         }
 
         return $uri;
+    }
+
+    private function makeRequest($method, $path, $query = null, $payload = null) {
+        $uri = $this->createUri($path, $query);
+
+        $options = [];
+        if (!empty($payload)) {
+            $options['body'] = $payload;
+        }
+
+        $result = $this->guzzleClient->request($method, $uri, $options);
+
+        return json_decode(strval($result->getBody()));
     }
 }
