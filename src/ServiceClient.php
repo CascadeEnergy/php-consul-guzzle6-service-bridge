@@ -44,6 +44,26 @@ class ServiceClient implements ServiceClientInterface
 
     public function get($path, $query = null)
     {
+        return $this->makeRequest('GET', $path, $query);
+    }
+
+    public function delete($path, $query = null)
+    {
+        return $this->makeRequest('DELETE', $path, $query);
+    }
+
+    public function put($path, $query = null, $payload = null)
+    {
+        return $this->makeRequest('PUT', $path, $query, $payload);
+    }
+    
+    public function post($path, $query = null, $payload = null)
+    {
+        return $this->makeRequest('POST', $path, $query, $payload);
+    }
+
+    private function createUri($path, $query)
+    {
         $baseUri = $this->serviceDiscoveryClient->getServiceAddress($this->serviceName, $this->serviceVersion);
 
         $uri = "{$this->protocol}://$baseUri/$path";
@@ -51,7 +71,18 @@ class ServiceClient implements ServiceClientInterface
             $uri .= "?" . urlencode($query);
         }
 
-        $result = $this->guzzleClient->get($uri);
+        return $uri;
+    }
+
+    private function makeRequest($method, $path, $query = null, $payload = null) {
+        $uri = $this->createUri($path, $query);
+
+        $options = [];
+        if (!empty($payload)) {
+            $options['body'] = $payload;
+        }
+
+        $result = $this->guzzleClient->request($method, $uri, $options);
 
         return json_decode(strval($result->getBody()));
     }

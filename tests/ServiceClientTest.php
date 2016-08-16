@@ -18,8 +18,12 @@ class ServiceClientTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->httpClient = $this->getMock('GuzzleHttp\Client', ['get']);
-        $this->discoveryClient = $this->getMock('CascadeEnergy\ServiceDiscovery\ServiceDiscoveryClientInterface');
+        $this->httpClient = $this
+            ->getMockBuilder('GuzzleHttp\Client')
+            ->setMethods(['request'])
+            ->getMock();
+
+        $this->discoveryClient = $this->createMock('CascadeEnergy\ServiceDiscovery\ServiceDiscoveryClientInterface');
 
         /** @noinspection PhpParamsInspection */
         $this->serviceClient = new ServiceClient(
@@ -34,7 +38,7 @@ class ServiceClientTest extends PHPUnit_Framework_TestCase
     {
         $data = json_encode(['foo' => 42]);
 
-        $result = $this->getMock('Psr\Http\Message\ResponseInterface');
+        $result = $this->createMock('Psr\Http\Message\ResponseInterface');
         $result->expects($this->once())->method('getBody')->willReturn($data);
 
         $this->discoveryClient
@@ -45,8 +49,8 @@ class ServiceClientTest extends PHPUnit_Framework_TestCase
 
         $this->httpClient
             ->expects($this->once())
-            ->method('get')
-            ->with('http://uri:port/pathQux')
+            ->method('request')
+            ->with('GET', 'http://uri:port/pathQux')
             ->willReturn($result);
 
         $this->assertEquals(json_decode($data), $this->serviceClient->get('pathQux'));
@@ -56,7 +60,7 @@ class ServiceClientTest extends PHPUnit_Framework_TestCase
     {
         $data = json_encode(['foo' => 42]);
 
-        $result = $this->getMock('Psr\Http\Message\ResponseInterface');
+        $result = $this->createMock('Psr\Http\Message\ResponseInterface');
         $result->expects($this->once())->method('getBody')->willReturn($data);
 
         $this->discoveryClient
@@ -67,8 +71,8 @@ class ServiceClientTest extends PHPUnit_Framework_TestCase
 
         $this->httpClient
             ->expects($this->once())
-            ->method('get')
-            ->with('http://uri:port/pathQux?bagelQuery')
+            ->method('request')
+            ->with('GET', 'http://uri:port/pathQux?bagelQuery')
             ->willReturn($result);
 
         $this->assertEquals(json_decode($data), $this->serviceClient->get('pathQux', 'bagelQuery'));
@@ -78,7 +82,7 @@ class ServiceClientTest extends PHPUnit_Framework_TestCase
     {
         $data = json_encode(['foo' => 42]);
 
-        $result = $this->getMock('Psr\Http\Message\ResponseInterface');
+        $result = $this->createMock('Psr\Http\Message\ResponseInterface');
         $result->expects($this->once())->method('getBody')->willReturn($data);
 
         $this->discoveryClient
@@ -89,11 +93,76 @@ class ServiceClientTest extends PHPUnit_Framework_TestCase
 
         $this->httpClient
             ->expects($this->once())
-            ->method('get')
-            ->with('https://uri:port/pathQux')
+            ->method('request')
+            ->with('GET', 'https://uri:port/pathQux')
             ->willReturn($result);
 
         $this->serviceClient->setProtocol('https');
         $this->assertEquals(json_decode($data), $this->serviceClient->get('pathQux'));
+    }
+
+    public function testItShouldExecuteADeleteRequest()
+    {
+        $data = json_encode(['foo' => 42]);
+        $result = $this->createMock('Psr\Http\Message\ResponseInterface');
+        $result->expects($this->once())->method('getBody')->willReturn($data);
+
+        $this->discoveryClient
+            ->expects($this->once())
+            ->method('getServiceAddress')
+            ->with('serviceFoo', 'versionBar')
+            ->willReturn('uri:port');
+
+        $this->httpClient
+            ->expects($this->once())
+            ->method('request')
+            ->with('DELETE', 'http://uri:port/pathQux')
+            ->willReturn($result);
+
+        $this->assertEquals(json_decode($data), $this->serviceClient->delete('pathQux'));
+    }
+
+    public function testItShouldExecuteAPutRequest()
+    {
+        $data = json_encode(['foo' => 42]);
+        $result = $this->createMock('Psr\Http\Message\ResponseInterface');
+        $result->expects($this->once())->method('getBody')->willReturn($data);
+
+        $this->discoveryClient
+            ->expects($this->once())
+            ->method('getServiceAddress')
+            ->with('serviceFoo', 'versionBar')
+            ->willReturn('uri:port');
+
+        $this->httpClient
+            ->expects($this->once())
+            ->method('request')
+            ->willReturn($result);
+
+        $this->assertEquals(json_decode($data), $this->serviceClient->put('pathQux'));
+    }
+
+    public function testItShouldExecuteAPostRequest()
+    {
+        $data = json_encode(['foo' => 42]);
+        $payload = [
+            'body' => 'fooPayload'
+        ];
+        $result = $this->createMock('Psr\Http\Message\ResponseInterface');
+        $result->expects($this->once())->method('getBody')->willReturn($data);
+
+        $this->discoveryClient
+            ->expects($this->once())
+            ->method('getServiceAddress')
+            ->with('serviceFoo', 'versionBar')
+            ->willReturn('uri:port');
+
+        $this->httpClient
+            ->expects($this->once())
+            ->method('request')
+            ->with('POST', 'http://uri:port/pathQux', $payload)
+            ->willReturn($result);
+
+        $this->assertEquals(json_decode($data), $this->serviceClient->post('pathQux', null, 'fooPayload'));
     }
 }
